@@ -60,6 +60,7 @@ def function_chooser():
              continue      
 def multi_function_chooser():
     list_of_functions = [ "2,2 +", "3,3 +", "2,2 -", "3,3 -", "2,2 *", "3,3 *", "/", "square"]
+    # the numbers will be the digits that I run the function with
     is_done = False
     include_usuable = False
 
@@ -336,6 +337,7 @@ def multi(number_of_functions):
     score = 0  
     questions_answered = 0
     
+
     if is_done == False:
     
         # must be true to loop questions
@@ -348,11 +350,10 @@ def multi(number_of_functions):
         # must be false in order to check conditions at the bottom
         answer_usable = False
 
-        real_answer = randint(50,299)
-        second_number = randint(1,20)
-        first_number = real_answer * second_number
-        user_answer = input(f"What is {first_number} / {second_number}?\n")
-        
+        question_type = randint (0, number_of_functions)
+        # trying to make it so question type will be the index of a function in the list of functions
+        # then it'll call the corressponding function but only to answer 1 question of that type
+
         if user_answer.lower() == "done":
             answering_questions = False
             is_done = True
@@ -436,7 +437,7 @@ def main():
                 ending_sequence(0,0)
                 is_done = True
                 break
-            score, questions_answered = squares()
+            score, questions_answered = multi(len(chosen_functions))
             ending_sequence(score, questions_answered)
             is_done = True
             break 
