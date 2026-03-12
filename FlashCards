@@ -1,0 +1,5 @@
+#Perfect Squares
+base_list = [number for number in range (1,30)]
+squares_list = [(number*number) for number in base_list]
+
+#???how can I put this into a dictionary
