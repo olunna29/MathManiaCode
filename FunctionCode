@@ -332,11 +332,11 @@ def squares():
         score += question_answering(user_answer, real_answer)
         questions_answered += 1
     return score, questions_answered  
-def multi(number_of_functions):
+def multi(number_of_functions, new_list_of_functions):
     is_done = False
     score = 0  
     questions_answered = 0
-    
+    function_dictionary = {"2,2 +" : addition("2,2"), "3,3 +" : addition("3,3"), "2,2 -" : subtraction("2,2"), "3,3 -" : subtraction("3,3"), "2,2 *" : multiplication("2,2"), "3,3 *" : Multiplication("3,3"), "/" : division(), "square" : squares()}
 
     if is_done == False:
     
