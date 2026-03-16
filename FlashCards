@@ -1,5 +1,40 @@
-#Perfect Squares
-base_list = [number for number in range (1,30)]
-squares_list = [(number*number) for number in base_list]
+import math
+from random import randint
+square_dictionary = {}
+square_root_dictionary = {}
+square_root_list = [2, 3, 5, 6, 7, 8]
 
-#???how can I put this into a dictionary
+# I want to use these dictionaries to create flashcards on the frontend but also to add a causal checker as well
+# The checker will mostly for the person to see what they need to memorize and is less about speed/accuracy
+# Will add comments and loops soon
+
+for number in range (1,30):
+    square_dictionary[number]= number**2
+
+for number in square_root_list:
+    square_root_dictionary[number] = math.sqrt(number)
+
+roman_numeral_dictionary = {1:"I", 5: "V", 10: "X", 50: "L", 100: "C", 500: "D", 1000: "M"}
+
+def checker(dictionary, function):
+    index = randint(1,len(list(dictionary)))
+    user_answer = input(f"What is {list(dictionary)[index]} {function}? \n")
+    if user_answer == str(dictionary[list(dictionary)[index]]):
+        print("Correct :)")
+    else:
+        print(f"The answer was {dictionary[list(dictionary)[index]]}")
+    return None
+
+
+def main():
+    print("Welcome to the Memorization Station of Math Mania!")
+    choice = input("Please select whether you'd like to review 'squares', 'square roots', or 'roman numerals'")
+    if choice.lower == "squares":
+        checker (square_dictionary, "squared")
+    elif choice.lower == "square roots":
+        checker (square_root_dictionary, "square rooted")
+    elif choice.lower == "roman numerals":
+        checker (roman_numeral_dictionary, "in roman_numeral_form")
+    else:
+        choice = input("You must type 'squares', 'square roots', or 'roman numerals'")
+    
