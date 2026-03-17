@@ -51,37 +51,40 @@ def function_chooser():
             elif function_input.lower == "square":
                 print("You have chosen squares!")
                 return function_input.lower      
-            elif function_input == "multi":
+            elif function_input.lower == "multi":
                 print("You have chosen multiple functions!")
-                return function_input 
+                return function_input.lower 
             return function_input
         else:
              function_input = input("You must type +, -, *, /, 'square', 'multi' or 'done'\n")
              continue      
 def multi_function_chooser():
-    list_of_functions = [ "2 by 2 Addition", "3 by 3 Addition", "2 by 2 Subtraction", "3 by 3 Subtraction", 
-                         "2 by 2 Multiplication", "3 by 3 Multiplication", "Division", "Square"]
+    list_of_functions = ["2 by 2 Addition", "3 by 3 Addition", "2 by 2 Subtraction", "3 by 3 Subtraction", "2 by 2 Multiplication", "3 by 3 Multiplication", "Division", "Square"]
     # the numbers will be the digits that I run the function with
     is_done = False
     include_usuable = False
 
     print("Please select which functions you would ike to include.\
-          \n Following each function, type 'yes' to include it and 'no' not to.\
-          \n Type 'done' if you wish to exit")  
+          \nFollowing each function, type 'yes' to include it and 'no' not to.\
+          \nType 'done' if you wish to exit")  
 
     for function in list_of_functions:
         include = input(f"Would you like to include {function}?\n")
+        counter = 0
 
         while is_done == False and include_usuable == False:
             if include.lower == "done":
                 is_done = True
                 return None
-            elif include.lower == "yes":
-                continue
-            elif include.lower == "no":
-                list_of_functions = list_of_functions.remove(function)
+            elif include == "yes":
+                break
+            elif include == "no":
+                # won't work for some reason no matter what method I use
+                list_of_functions.remove(function)
             else:
                 include = input("You must type 'yes', 'no', or 'done'.")
+        counter += 1
+
     return list_of_functions
 
 # allows user to request digits
@@ -190,7 +193,7 @@ def question_looper(function, digits, function_list):
                 if counter == None:
                    return score, questions_answered  
             
-            if function == "-":
+            elif function == "-":
                 counter = subtraction(digits)
                 if counter != None:
                     score += counter
@@ -198,7 +201,7 @@ def question_looper(function, digits, function_list):
                 if counter == None:
                    return score, questions_answered
 
-            if function == "*":
+            elif function == "*":
                 counter = multiplication(digits)
                 if counter != None:
                     score += counter
@@ -223,7 +226,7 @@ def question_looper(function, digits, function_list):
                 if counter == None:
                    return score, questions_answered  
             
-            if function == "square":
+            elif function == "square":
                 counter = squares()
                 if counter != None:
                     score += counter
@@ -364,7 +367,7 @@ def main():
             ending_sequence(0,0)
             is_done = True
             break
-        elif chosen_function == "+" or "-" or "*":
+        elif chosen_function == "+" or chosen_function == "-" or chosen_function == "*":
             chosen_digits = digit_requester()
             if done_checker(chosen_digits) == True:
                 ending_sequence(0,0)
@@ -374,7 +377,7 @@ def main():
             ending_sequence(score, questions_answered)
             is_done = True
             break   
-        elif chosen_function == "/" or "square":
+        elif chosen_function == "/" or chosen_function == "square":
             score, questions_answered = question_looper(chosen_function, None, None)
             ending_sequence(score, questions_answered)
             is_done = True
