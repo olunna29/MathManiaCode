@@ -1,3 +1,4 @@
+
 # starting values and modules
 from random import randint
 good_function_input = False
@@ -37,7 +38,7 @@ def function_chooser():
         if function_input.lower() == "done":
             return None
         
-        elif function_input in list_of_functions or function_input.lower in list_of_functions:
+        elif function_input in list_of_functions or function_input.lower()in list_of_functions:
             good_function_input = True
             
             if function_input == "+":
@@ -48,19 +49,19 @@ def function_chooser():
                 print("\nYou have chosen multiplication!\n")
             elif function_input == "/":
                 print("\nYou have chosen division!\n")
-            elif function_input.lower == "square":
+            elif function_input.lower()== "square":
                 print("You have chosen squares!")
-                return function_input.lower      
-            elif function_input.lower == "multi":
+                return function_input.lower()     
+            elif function_input.lower()== "multi":
                 print("You have chosen multiple functions!")
-                return function_input.lower 
+                return function_input.lower()
             return function_input
         else:
              function_input = input("You must type +, -, *, /, 'square', 'multi' or 'done'\n")
              continue      
 def multi_function_chooser():
     list_of_functions = ["2 by 2 Addition", "3 by 3 Addition", "2 by 2 Subtraction", "3 by 3 Subtraction", "2 by 2 Multiplication", "3 by 3 Multiplication", "Division", "Square"]
-    # the numbers will be the digits that I run the function with
+    chosen_functions = []
     is_done = False
     include_usuable = False
 
@@ -70,22 +71,20 @@ def multi_function_chooser():
 
     for function in list_of_functions:
         include = input(f"Would you like to include {function}?\n")
-        counter = 0
 
         while is_done == False and include_usuable == False:
-            if include.lower == "done":
+            if include.lower()== "done":
                 is_done = True
                 return None
-            elif include == "yes":
+            elif include.lower() == "yes":
+                chosen_functions.append(function)
                 break
-            elif include == "no":
-                # won't work for some reason no matter what method I use
-                list_of_functions.remove(function)
+            elif include.lower() == "no":
+                break
             else:
                 include = input("You must type 'yes', 'no', or 'done'.")
-        counter += 1
 
-    return list_of_functions
+    return chosen_functions
 
 # allows user to request digits
 def digit_requester():
@@ -170,7 +169,6 @@ def answer_checking(answer, actual_answer):
             break
 
 # loops the questions
-# ?? can't make digits optional for some reason
 def question_looper(function, digits, function_list):
     is_done = False
     score = 0  
@@ -236,7 +234,7 @@ def question_looper(function, digits, function_list):
 
         else:
             if function == "multi":
-                counter = multi(function_list)
+                counter = multi(len(function_list), function_list)
                 if counter != None:
                     score += counter
                     questions_answered += 1
@@ -321,9 +319,9 @@ def squares():
     return score
 def multi(number_of_functions, new_list_of_functions):
     score = 0  
-    function_dictionary = {"2 by 2 Addition" : addition("2,2"), "3 by 3 Addition" : addition("3,3"), "2 by 2 Subtraction" : subtraction("2,2"), 
-                           "3 by 3 Subtraction" : subtraction("3,3"), "2 by 2 Multiplication" : multiplication("2,2"), 
-                           "3 by 3 Multiplication" : multiplication("3,3"), "Division" : division(), "Square" : squares()}
+    function_dictionary = {"2 by 2 Addition" : lambda:addition("2,2"), "3 by 3 Addition" : lambda:addition("3,3"), "2 by 2 Subtraction" : lambda:subtraction("2,2"), 
+                           "3 by 3 Subtraction" : lambda:subtraction("3,3"), "2 by 2 Multiplication" : lambda:multiplication("2,2"), 
+                           "3 by 3 Multiplication" : lambda:multiplication("3,3"), "Division" : lambda:division(), "Square" : lambda:squares()}
 
     
     while is_done == False:
@@ -383,8 +381,9 @@ def main():
             is_done = True
             break   
         elif chosen_function == "multi":
-            list_of_functions = multi_function_chooser()
-            score, questions_answered = question_looper(chosen_function, None, list_of_functions)
+            chosen_functions = multi_function_chooser()
+            print(chosen_functions)
+            score, questions_answered = question_looper(chosen_function, None, chosen_functions)
             ending_sequence(score, questions_answered)
             is_done = True
             break   
