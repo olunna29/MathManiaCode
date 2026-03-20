@@ -2,10 +2,12 @@
 import math
 from random import randint
 from roman import Romanize 
+from fractions import Fraction
 square_dictionary = {}
 square_root_dictionary = {}
 square_root_list = [2, 3, 5, 6, 7, 8]
 roman_numeral_dictionary = {}
+decimal_dictionary = {}
 
 # making perfect square dictionary
 for number in range (1,30):
@@ -21,6 +23,9 @@ for number in range (1, 1000, 7):
     roman_numeral_dictionary[number] = numeral
     roman_numeral_dictionary[numeral] = number
 
+# making decimal dictionary
+for number in range (2, 17):
+    decimal_dictionary[f"1/{number}"] = round(1/number, 4)
 
 # this asks the questions and collects the score
 def quizzer(dictionary, function, message):
@@ -43,29 +48,29 @@ def quizzer(dictionary, function, message):
                 break
         
         print(message) # additional instructions based on quiz
-        print("The quiz will now begin! If you'd like to end early type 'done'.")
+        print("The quiz will now begin! If you'd like to end early type 'done'.\n")
         
         # loop that generates the question (from dictionary values) and checks the answer
         for questions in range (0, quiz_length):
             index = randint(1,len(list(dictionary))-1)
             user_answer = input(f"What is {list(dictionary)[index]} {function}? \n")
 
-            if user_answer == str(dictionary[list(dictionary)[index]]):
-                print("Correct :)")
+            if user_answer == str(dictionary[list(dictionary)[index]]) or user_answer == str(dictionary[list(dictionary)[index]]).strip("0"):
+                print("Correct :)\n")
                 score += 1
             elif user_answer.lower() == "done":
                 is_done = True
                 ending_sequence(score, questions)
                 return None
             else:
-                print(f"The answer was {dictionary[list(dictionary)[index]]}")
+                print(f"The answer was {dictionary[list(dictionary)[index]]}\n")
         ending_sequence(score, quiz_length)
         return None
 
 # allows them to choose if they want to view a list, do flashcards, or quiz themselves
-def review_method():
+def review_method(function):
     input_usable = False
-    review_type = input("If you'd like to review the list of perfect squares type 'list.'\n\
+    review_type = input(f"If you'd like to review the list of {function} type 'list.'\n\
 If you'd like review flashcards type 'flashcards.'\n\
 If you'd like to quiz yourself type 'quiz.'\n\
 Type 'done' to exit.\n\n")
@@ -95,10 +100,10 @@ def ending_sequence(score, questions):
 # allows them to choose a topic, then review method
 def main():
     print("Welcome to the Memorization Station of Math Mania!")
-    choice = input("Please select whether you'd like to review 'squares', 'square roots', 'roman numerals', or type 'done' to exit. \n\n")
+    choice = input("Please select whether you'd like to review 'squares', 'square roots', 'roman numerals', 'decimals' or type 'done' to exit. \n\n")
     while True:
         if choice.lower() == "squares":
-            method = review_method()
+            method = review_method("perfect squares")
             if method == "list":
                 print(square_dictionary)
                 ending_sequence(0,0)
@@ -115,7 +120,7 @@ def main():
                 return None
 
         elif choice.lower() == "square roots":
-            method = review_method()
+            method = review_method("common square roots")
             if method == "list":
                 print(square_dictionary)
                 ending_sequence(0,0)
@@ -131,7 +136,7 @@ def main():
                 print("Have a nice day!")
                 return None
         elif choice.lower() == "roman numerals":
-            method = review_method()
+            method = review_method("a lot of roman numerals")
             if method == "list":
                 print(square_dictionary)
                 ending_sequence(0,0)
@@ -146,6 +151,22 @@ def main():
                 return None
             else:
                 ending_sequence(0,0)
+                return None
+        elif choice.lower() == "decimals":
+            method = review_method("common fractions as decimals")
+            if method == "list":
+                print(decimal_dictionary)
+                ending_sequence(0,0)
+                return None
+            elif method == "flashcards":
+                print("Sorry, this is a UI only feature.")
+                ending_sequence(0,0)
+                return None
+            elif method == "quiz":
+                quizzer (decimal_dictionary, "as a decimal", "If needed, round to 4 decimal places.")
+                return None
+            else:
+                print("Have a nice day!")
                 return None
         elif choice.lower() == "done":
             ending_sequence(0,0)
