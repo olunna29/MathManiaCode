@@ -4,6 +4,448 @@ from random import randint
 good_function_input = False
 good_digit_length = False
 digits_are_numbers = False
+# starting values and modules
+from random import randint
+good_function_input = False
+good_digit_length = False
+digits_are_numbers = False
+digits_are_usable = False
+answering_questions = False
+answer_usable = False
+is_done = False
+questions_answered = 0
+score = 0
+list_of_functions = ["+", "-", "*", "/", "square", "multi"]
+
+# defining function to generate random digits based on input
+def random_number_generator(number_of_digits):
+    if number_of_digits == 1:
+        return (randint(1,9))
+    elif number_of_digits == 2:
+        return (randint(10,99))
+    else:
+        return (randint(100,999))
+
+# allows user to choose the function they want
+def function_chooser():
+    list_of_functions = ["+", "-", "*", "/", "square", "multi"]
+    good_function_input = False
+
+    # greeting
+    print("Welcome to Math Mania!")
+    
+    # requesting function from user
+    function_input = input("To start, please choose your function.\
+    \nPlease type +, -, *, /, 'square', or 'multi'. \nType 'done' if you wish to exit.\n")
+    
+    # checking if they chose one of the functions
+    while good_function_input == False:
+        if function_input.lower() == "done":
+            return None
+        
+        elif function_input in list_of_functions or function_input.lower()in list_of_functions:
+            good_function_input = True
+            
+            if function_input == "+":
+                print("\nYou have chosen addition!\n")
+            elif function_input == "-":
+                print("\nYou have chosen subtraction!\n")
+            elif function_input == "*":
+                print("\nYou have chosen multiplication!\n")
+            elif function_input == "/":
+                print("\nYou have chosen division!\n")
+            elif function_input.lower()== "square":
+                print("You have chosen squares!")
+                return function_input.lower()     
+            elif function_input.lower()== "multi":
+                print("You have chosen multiple functions!")
+                return function_input.lower()
+            return function_input
+        else:
+             function_input = input("You must type +, -, *, /, 'square', 'multi' or 'done'\n")
+             continue      
+def multi_function_chooser():
+    list_of_functions = ["2 by 2 Addition", "3 by 3 Addition", "2 by 2 Subtraction", "3 by 3 Subtraction", "2 by 2 Multiplication", "3 by 3 Multiplication", "Division", "Square"]
+    chosen_functions = []
+    is_done = False
+    include_usuable = False
+
+    print("Please select which functions you would ike to include.\
+          \nFollowing each function, type 'yes' to include it and 'no' not to.\
+          \nType 'done' if you wish to exit")  
+
+    for function in list_of_functions:
+        include = input(f"Would you like to include {function}?\n")
+
+        while is_done == False and include_usuable == False:
+            if include.lower()== "done":
+                is_done = True
+                return None
+            elif include.lower() == "yes":
+                chosen_functions.append(function)
+                break
+            elif include.lower() == "no":
+                break
+            else:
+                include = input("You must type 'yes', 'no', or 'done'.\n")
+
+    return chosen_functions
+
+# allows user to request digits
+def digit_requester():
+    # requesting digits from user
+    good_digit_length = False
+    digits_are_numbers = False
+    digits_are_usable = False
+    is_done = False
+    
+    if is_done == False:
+        digits_input = input("Please type the digits you'd like to use in format a,b\
+        \nwith a being # of digits in first number and b being the # of digits in the second.\
+        \nEach # must be between the numbers 1 and 3. \nType 'done' if you wish to exit.\n")
+        
+        # checking if their answer has the correct length
+        while digits_are_usable == False or digits_are_numbers == False or good_digit_length == False:
+            if digits_input.lower() == "done":
+                is_done = True
+                return None
+            
+            if digits_input != "" and len(digits_input) == 3:
+                good_digit_length = True
+            else:
+                good_digit_length = False
+                digits_input = input("Your answer should be 3 characters long ex: 2,3. Please try again. \n")
+                continue
+        
+            # checking if their their answer has numbers
+            if digits_input[0].isnumeric() == True and digits_input[2].isnumeric() == True:
+                digits_are_numbers = True
+            else: 
+                digits_are_numbers = False
+                digits_input = input("You need to type digits not letters ex: 2,3. Please try again. \n")
+                continue
+    
+            # checking if their numbers are in range
+            if 3 >= int(digits_input[0]) >= 1 and 3 >= int(digits_input[2]) >= 1:
+                digits_are_usable = True
+                return str(digits_input)
+            else: 
+                digits_are_usable = False
+                digits_input = input("Your digits need to be between 1 and 3. Please try again. \n")
+                continue
+
+# checks answer and collects score
+def answer_checking(answer, actual_answer):
+    is_done = False
+    answering_questions = True
+    
+    while is_done == False and answering_questions == True:
+    # must be false in order to check conditions at the bottom
+        answer_usable = False
+    
+        # checking if user wants to stop answering questions
+        if answer.lower() == "done":
+            answering_questions = False
+            is_done = True
+            return None
+        
+        # checking if answer is a number (ignoring '-' in case of negatives)
+        while answer_usable == False:
+            
+            if answer.lower() == "done":
+                answering_questions = False
+                is_done = True
+                return None
+                
+            elif answer.strip("-").isdigit() == False:
+                answer = input("You must enter a number for your answer\n")
+            else:
+                answer_usable = True
+                break
+        
+        # checking if answer is correct and adding to question/score total    
+        if is_done == False and actual_answer == int(answer):
+                print("Correct!\n")
+                return 1
+        elif is_done == False:
+                print("Incorrect :(\n")
+                return 0
+        else:
+            break
+
+# loops the questions
+def question_looper(function, digits, function_list):
+    is_done = False
+    score = 0  
+    questions_answered = 0
+    answering_questions == True
+    
+    if digits != None:
+        if is_done == False:
+            # must be true to loop questions
+            answering_questions = True
+            
+            print("\nNow it's time to start answering questions!\
+            \nType 'done' when you want to finish and get your score\n")
+
+        while is_done == False and answering_questions == True:
+            if function == "+":
+                counter = addition(digits)
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered  
+            
+            elif function == "-":
+                counter = subtraction(digits)
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+
+            elif function == "*":
+                counter = multiplication(digits)
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered    
+                
+    elif digits == None and function_list == None:
+        
+        if is_done == False:
+            # must be true to loop questions
+            answering_questions = True
+            
+            print("\nNow it's time to start answering questions!\
+            \nType 'done' when you want to finish and get your score\n")
+
+        while is_done == False and answering_questions == True:
+            if function == "/":
+                counter = division()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered  
+            
+            elif function == "square":
+                counter = squares()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+
+    elif function_list != None:
+        while is_done == False and answering_questions == True:
+            if is_done == False:
+            # must be true to loop questions
+                answering_questions = True
+            
+                print("\nNow it's time to start answering questions!\
+                \nType 'done' when you want to finish and get your score\n")
+            
+            if function == "multi":
+                counter = multi(len(function_list), function_list)
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                    return score, questions_answered    
+
+# generates the numbers and answers based on each function
+def addition(digits):   
+    score = 0
+
+    # generating numbers, setting answer, and requesting input for +
+    first_number = random_number_generator(int(digits[0]))
+    second_number = random_number_generator(int(digits[2]))
+    real_answer = first_number + second_number
+    user_answer = input(f"What is {first_number} + {second_number}?\n")
+        
+    if user_answer.lower() == "done":
+        is_done = True
+        return None
+    
+    score += answer_checking(user_answer, real_answer)
+    return score
+def subtraction(digits):   
+    score = 0
+
+    # generating numbers, setting answer, and requesting input for -
+    first_number = random_number_generator(int(digits[0]))
+    second_number = random_number_generator(int(digits[2]))
+    real_answer = first_number - second_number
+    user_answer = input(f"What is {first_number} - {second_number}?\n")
+        
+    if user_answer.lower() == "done":
+        is_done = True
+        return None
+    
+    score += answer_checking(user_answer, real_answer)
+    return score
+def multiplication(digits):   
+    score = 0
+
+    # generating numbers, setting answer, and requesting input for *
+    first_number = random_number_generator(int(digits[0]))
+    second_number = random_number_generator(int(digits[2]))
+    real_answer = first_number * second_number
+    user_answer = input(f"What is {first_number} * {second_number}?\n")
+        
+    if user_answer.lower() == "done":
+        is_done = True
+        return None
+    
+    score += answer_checking(user_answer, real_answer)
+    return score 
+def division():   
+    score = 0  
+
+    # generating numbers, setting answer, and requesting input for /
+    real_answer = randint(50,299)
+    second_number = randint(1,20)
+    first_number = real_answer * second_number
+    user_answer = input(f"What is {first_number} / {second_number}?\n")
+        
+    if user_answer.lower() == "done":
+        is_done = True
+        return None
+        
+    score += answer_checking(user_answer, real_answer)
+    return score  
+def squares():   
+    score = 0  
+
+    # generating numbers, setting answer, and requesting input for squares
+    number = randint(1,199)
+    real_answer = number * number
+    user_answer = input(f"What is {number} squared?\n")
+        
+    if user_answer.lower() == "done":
+        answering_questions = False
+        is_done = True
+        return None
+        
+    score += answer_checking(user_answer, real_answer)
+    return score
+def multi(number_of_functions, new_list_of_functions):
+    score = 0  
+    questions = 0
+    is_done = False
+
+    def add_two():
+        score = addition("2,2")
+        return score
+    add_2 = add_two
+
+    def add_three():
+        score = addition("3,3")
+        return score
+    add_3 = add_three
+    
+    def sub_two():
+        score = subtraction("2,2")
+        return score
+    sub_2 = sub_two
+
+    def sub_three():
+        score = subtraction("3,3")
+        return score
+    sub_3 = sub_three
+
+    def mul_two():
+        score = multiplication("2,2")
+        return score
+    mul_2 = mul_two
+
+    def mul_three():
+        score = multiplication("3,3")
+        return score
+    mul_3 = mul_three
+    
+    div = division
+    square = squares
+
+    function_dictionary = {"2 by 2 Addition" : add_2, "3 by 3 Addition" : add_3, "2 by 2 Subtraction" : sub_2, 
+                           "3 by 3 Subtraction" : sub_3, "2 by 2 Multiplication" : mul_2, 
+                           "3 by 3 Multiplication" : mul_3, "Division" : div, "Square" : square}
+    
+    
+
+    question_type = randint (0, number_of_functions-1)
+    current_function = new_list_of_functions[question_type]
+        
+    counter = (function_dictionary[current_function])()
+        
+    if counter == None:
+        is_done = True
+        return None
+
+    score += counter
+    return score
+
+# says goodbye and prints score
+def ending_sequence(correct, total):    
+    # closing statement with score
+    if total > 0:
+        print(f"You got {correct} out of {total} questions correct!\
+        \nHave a nice day!")
+    else:
+        print("Have a nice day!")
+
+# checks if user wants to say done (before they get to the question portion)
+def done_checker(value):
+    if value == None:
+        return True
+    else:
+        return False
+
+# runs the program
+def main():
+    questions_answered = 0
+    score = 0
+    is_done = False
+    
+    while is_done == False:
+        chosen_function = function_chooser()
+        if done_checker(chosen_function) == True:
+            ending_sequence(0,0)
+            is_done = True
+            break
+        elif chosen_function == "+" or chosen_function == "-" or chosen_function == "*":
+            chosen_digits = digit_requester()
+            if done_checker(chosen_digits) == True:
+                ending_sequence(0,0)
+                is_done = True
+                break
+            score, questions_answered = question_looper(chosen_function, chosen_digits, None)
+            ending_sequence(score, questions_answered)
+            is_done = True
+            break   
+        elif chosen_function == "/" or chosen_function == "square":
+            score, questions_answered = question_looper(chosen_function, None, None)
+            ending_sequence(score, questions_answered)
+            is_done = True
+            break   
+        elif chosen_function == "multi":
+            chosen_functions = multi_function_chooser()
+            if done_checker(chosen_functions) == True:
+                ending_sequence(0,0)
+                is_done = True
+                break
+            score, questions_answered = question_looper(chosen_function, None, chosen_functions)
+            ending_sequence(score, questions_answered)
+            is_done = True
+            break   
+    
+
+
+main()
+
 digits_are_usable = False
 answering_questions = False
 answer_usable = False
