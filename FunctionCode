@@ -11,7 +11,7 @@ answer_usable = False
 is_done = False
 questions_answered = 0
 score = 0
-list_of_functions = ["+", "-", "*", "/", "square", "multi"]
+
 
 # defining function to generate random digits based on input
 def random_number_generator(number_of_digits):
@@ -24,7 +24,7 @@ def random_number_generator(number_of_digits):
 
 # allows user to choose the function they want
 def function_chooser():
-    list_of_functions = ["+", "-", "*", "/", "square", "multi"]
+    list_of_functions = ["+", "-", "*", "/", "square", "multi", "fraction"]
     good_function_input = False
 
     # greeting
@@ -32,7 +32,7 @@ def function_chooser():
     
     # requesting function from user
     function_input = input("To start, please choose your function.\
-    \nPlease type +, -, *, /, 'square', or 'multi'. \nType 'done' if you wish to exit.\n\n")
+    \nPlease type +, -, *, /, 'square', 'fraction', or 'multi'. \nType 'done' if you wish to exit.\n\n")
     
     # checking if they chose one of the functions
     while good_function_input == False:
@@ -52,16 +52,24 @@ def function_chooser():
                 print("\nYou have chosen division!\n\n")
             elif function_input.lower()== "square":
                 print("You have chosen squares!\n\n")
-                return function_input.lower()     
+                return function_input.lower()
+            elif function_input.lower()== "fraction":
+                print("You have chosen a fraction function!\
+                      \n*Note: You must simplify your answers and write them as improper fractions!*\n")
+                return function_input.lower()      
             elif function_input.lower()== "multi":
                 print("You have chosen multiple functions!\n\n")
                 return function_input.lower()
             return function_input
         else:
-             function_input = input("You must type +, -, *, /, 'square', 'multi' or 'done'\n\n")
+             function_input = input("You must type +, -, *, /, 'square', 'fraction', 'multi' or 'done'\n\n")
              continue      
 def multi_function_chooser():
-    list_of_functions = ["2 by 2 Addition", "3 by 3 Addition", "2 by 2 Subtraction", "3 by 3 Subtraction", "2 by 2 Multiplication", "3 by 3 Multiplication", "Division", "Square"]
+    list_of_functions = ["2 by 2 Addition", "3 by 3 Addition", "2 by 2 Subtraction", 
+                         "3 by 3 Subtraction", "2 by 2 Multiplication", 
+                         "3 by 3 Multiplication", "Division", "Square",
+                         "Fraction Addition", "Fraction Subtraction", 
+                         "Fraction Multiplication", "Fraction Division"]
     chosen_functions = []
     is_done = False
     include_usuable = False
@@ -88,22 +96,51 @@ def multi_function_chooser():
         if chosen_functions != []:
             return chosen_functions
         else:
-            print("You must choose at least one function.\n\n")
-
-    
+            print("You must choose at least one function.\n\n")   
 def fraction_function_chooser():
     good_fraction_choice = False
     good_denominator_choice = False
     while good_fraction_choice == False:
         fraction_choice = input("Please choose if you'd like to do fraction 'addition',\
-                                \n'subtraction', multipication', 'divison', or type 'done' to exit.\n\n")
+                                \n'subtraction', multipication', 'division', or type 'done' to exit.\n\n")
         if fraction_choice.lower() == "addition":
             while good_denominator_choice == False:
-                denominator_choice = input("Please type 'same' for same denominators, 'different' for different denominators, or 'done' to exit")
+                denominator_choice = input("Please type 'same' for same denominators, 'different' if it doesn't matter, or 'done' to exit.\n\n")
                 if denominator_choice.lower() == "same":
-                    return fraction_add_same
+                    return "fraction_add_same"
                 elif denominator_choice.lower() == "different":
-                    return fraction_add_same
+                    return "fraction_add_diff"
+                elif denominator_choice.lower() == "done":
+                    return None
+        elif fraction_choice.lower() == "subtraction":
+            while good_denominator_choice == False:
+                denominator_choice = input("Please type 'same' for same denominators, 'different' if it doesn't matter, or 'done' to exit.\n\n")
+                if denominator_choice.lower() == "same":
+                    return "fraction_sub_same"
+                elif denominator_choice.lower() == "different":
+                    return "fraction_sub_diff"
+                elif denominator_choice.lower() == "done":
+                    return None
+        elif fraction_choice.lower() == "mutiplication":
+            while good_denominator_choice == False:
+                denominator_choice = input("Please type 'same' for same denominators, 'different' if it doesn't matter, or 'done' to exit.\n\n")
+                if denominator_choice.lower() == "same":
+                    return "fraction_mul_same"
+                elif denominator_choice.lower() == "different":
+                    return "fraction_mul_diff"
+                elif denominator_choice.lower() == "done":
+                    return None
+        elif fraction_choice.lower() == "division":
+            while good_denominator_choice == False:
+                denominator_choice = input("Please type 'same' for same denominators, 'different' if it doesn't matter, or 'done' to exit.\n\n")
+                if denominator_choice.lower() == "same":
+                    return "fraction_div_same"
+                elif denominator_choice.lower() == "different":
+                    return "fraction_div_diff"
+                elif denominator_choice.lower() == "done":
+                    return None
+        elif fraction_choice.lower() == "done":
+            return None
 
 # allows user to request digits
 def digit_requester():
@@ -186,6 +223,41 @@ def answer_checking(answer, actual_answer):
                 return 0
         else:
             break
+def answer_checking_fraction(answer, actual_answer):
+    is_done = False
+    answering_questions = True
+    
+    while is_done == False and answering_questions == True:
+    # must be false in order to check conditions at the bottom
+        answer_usable = False
+    
+        # checking if user wants to stop answering questions
+        if answer.lower() == "done":
+            answering_questions = False
+            is_done = True
+            return None
+        
+        # checking if answer is a number (ignoring '-' in case of negatives)
+        while answer_usable == False:
+            
+            if answer.lower() == "done":
+                answering_questions = False
+                is_done = True
+                return None
+                
+            else:
+                answer_usable = True
+                break
+        
+        # checking if answer is correct and adding to question/score total    
+        if is_done == False and str(actual_answer) == answer:
+                print("Correct!\n")
+                return 1
+        elif is_done == False:
+                print("Incorrect :(\n")
+                return 0
+        else:
+            break
 
 # loops the questions
 def question_looper(function, digits, function_list):
@@ -251,6 +323,70 @@ def question_looper(function, digits, function_list):
                     questions_answered += 1
                 elif counter == None:
                    return score, questions_answered
+                
+            elif function == "fraction_add_same":
+                counter = fraction_add_same()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+            
+            elif function == "fraction_add_diff":
+                counter = fraction_add_diff()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+                
+            elif function == "fraction_sub_same":
+                counter = fraction_sub_same()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+            
+            elif function == "fraction_sub_diff":
+                counter = fraction_sub_diff()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+                
+            elif function == "fraction_mul_same":
+                counter = fraction_mul_same()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+            
+            elif function == "fraction_mul_diff":
+                counter = fraction_mul_diff()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+                
+            elif function == "fraction_div_same":
+                counter = fraction_div_same()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+            
+            elif function == "fraction_div_diff":
+                counter = fraction_div_diff()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
 
     elif function_list != None:
         if is_done == False:
@@ -281,7 +417,6 @@ def addition(digits):
     user_answer = input(f"What is {first_number} + {second_number}?\n")
         
     if user_answer.lower() == "done":
-        is_done = True
         return None
     
     score += answer_checking(user_answer, real_answer)
@@ -296,7 +431,6 @@ def subtraction(digits):
     user_answer = input(f"What is {first_number} - {second_number}?\n")
         
     if user_answer.lower() == "done":
-        is_done = True
         return None
     
     score += answer_checking(user_answer, real_answer)
@@ -311,7 +445,6 @@ def multiplication(digits):
     user_answer = input(f"What is {first_number} * {second_number}?\n")
         
     if user_answer.lower() == "done":
-        is_done = True
         return None
     
     score += answer_checking(user_answer, real_answer)
@@ -326,7 +459,6 @@ def division():
     user_answer = input(f"What is {first_number} / {second_number}?\n")
         
     if user_answer.lower() == "done":
-        is_done = True
         return None
         
     score += answer_checking(user_answer, real_answer)
@@ -340,8 +472,6 @@ def squares():
     user_answer = input(f"What is {number} squared?\n")
         
     if user_answer.lower() == "done":
-        answering_questions = False
-        is_done = True
         return None
         
     score += answer_checking(user_answer, real_answer)
@@ -357,10 +487,118 @@ def fraction_add_same():
     user_answer = input(f"What is {first_numerator}/{denominator} + {second_numerator}/{denominator}?\n")
         
     if user_answer.lower() == "done":
-        is_done = True
         return None
     
-    score += answer_checking(user_answer, real_answer)
+    score += answer_checking_fraction(user_answer, real_answer)
+    return score 
+def fraction_add_diff():
+    score = 0
+
+    # generating numbers, setting answer, and requesting input
+    first_denominator = randint(2,12)
+    second_denominator = randint(2,12)
+    first_numerator = randint(1,2*first_denominator)
+    second_numerator = randint(1,2*second_denominator)
+    real_answer = (Fraction(first_numerator, first_denominator) + Fraction(second_numerator, second_denominator))
+    user_answer = input(f"What is {first_numerator}/{first_denominator} + {second_numerator}/{second_denominator}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking_fraction(user_answer, real_answer)
+    return score 
+def fraction_sub_same():
+    score = 0
+
+    # generating numbers, setting answer, and requesting input
+    denominator = randint(2,12)
+    first_numerator = randint(1,3*denominator)
+    second_numerator = randint(1,3*denominator)
+    real_answer = (Fraction(first_numerator, denominator) - Fraction(second_numerator, denominator))
+    user_answer = input(f"What is {first_numerator}/{denominator} - {second_numerator}/{denominator}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking_fraction(user_answer, real_answer)
+    return score 
+def fraction_sub_diff():
+    score = 0
+
+    # generating numbers, setting answer, and requesting input
+    first_denominator = randint(2,12)
+    second_denominator = randint(2,12)
+    first_numerator = randint(1,2*first_denominator)
+    second_numerator = randint(1,2*second_denominator)
+    real_answer = (Fraction(first_numerator, first_denominator) - Fraction(second_numerator, second_denominator))
+    user_answer = input(f"What is {first_numerator}/{first_denominator} - {second_numerator}/{second_denominator}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking_fraction(user_answer, real_answer)
+    return score 
+def fraction_mul_same():
+    score = 0
+
+    # generating numbers, setting answer, and requesting input
+    denominator = randint(2,12)
+    first_numerator = randint(1,3*denominator)
+    second_numerator = randint(1,3*denominator)
+    real_answer = (Fraction(first_numerator, denominator) * Fraction(second_numerator, denominator))
+    user_answer = input(f"What is {first_numerator}/{denominator} * {second_numerator}/{denominator}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking_fraction(user_answer, real_answer)
+    return score 
+def fraction_mul_diff():
+    score = 0
+
+    # generating numbers, setting answer, and requesting input
+    first_denominator = randint(2,12)
+    second_denominator = randint(2,12)
+    first_numerator = randint(1,2*first_denominator)
+    second_numerator = randint(1,2*second_denominator)
+    real_answer = (Fraction(first_numerator, first_denominator) * Fraction(second_numerator, second_denominator))
+    user_answer = input(f"What is {first_numerator}/{first_denominator} * {second_numerator}/{second_denominator}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking_fraction(user_answer, real_answer)
+    return score 
+def fraction_div_same():
+    score = 0
+
+    # generating numbers, setting answer, and requesting input
+    denominator = randint(2,12)
+    first_numerator = randint(1,3*denominator)
+    second_numerator = randint(1,3*denominator)
+    real_answer = (Fraction(first_numerator, denominator) / Fraction(second_numerator, denominator))
+    user_answer = input(f"What is {first_numerator}/{denominator} / {second_numerator}/{denominator}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking_fraction(user_answer, real_answer)
+    return score 
+def fraction_div_diff():
+    score = 0
+
+    # generating numbers, setting answer, and requesting input
+    first_denominator = randint(2,12)
+    second_denominator = randint(2,12)
+    first_numerator = randint(1,2*first_denominator)
+    second_numerator = randint(1,2*second_denominator)
+    real_answer = (Fraction(first_numerator, first_denominator) / Fraction(second_numerator, second_denominator))
+    user_answer = input(f"What is {first_numerator}/{first_denominator} / {second_numerator}/{second_denominator}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking_fraction(user_answer, real_answer)
     return score 
 # chooses random function to call from list of chosen functions
 def multi(number_of_functions, new_list_of_functions):
@@ -395,7 +633,9 @@ def multi(number_of_functions, new_list_of_functions):
     # establishing dictionary where each value from list will correspond to a function
     function_dictionary = {"2 by 2 Addition" : add_2, "3 by 3 Addition" : add_3, "2 by 2 Subtraction" : sub_2, 
                            "3 by 3 Subtraction" : sub_3, "2 by 2 Multiplication" : mul_2, 
-                           "3 by 3 Multiplication" : mul_3, "Division" : division, "Square" : squares}
+                           "3 by 3 Multiplication" : mul_3, "Division" : division, "Square" : squares,
+                           "Fraction Addition" : fraction_add_diff, "Fraction Subtraction": fraction_sub_diff, 
+                           "Fraction Multiplication": fraction_mul_diff, "Fraction Division": fraction_div_diff}
     
     
     # generates random number to choose a function
@@ -458,7 +698,7 @@ def main():
                 ending_sequence(0,0)
                 is_done = True
                 break
-            score, questions_answered = question_looper(fraction_choice, chosen_digits, None)
+            score, questions_answered = question_looper(fraction_choice, None, None)
             ending_sequence(score, questions_answered)
             is_done = True
             break
