@@ -1,6 +1,7 @@
 
 # starting values and modules
 from random import randint
+from fractions import Fraction
 good_function_input = False
 good_digit_length = False
 digits_are_numbers = False
@@ -64,11 +65,12 @@ def multi_function_chooser():
     chosen_functions = []
     is_done = False
     include_usuable = False
-
-    print("Please select which functions you would ike to include.\
+    
+    while True:
+        print("Please select which functions you would ike to include.\
           \nFollowing each function, type 'yes' to include it and 'no' not to.\
           \nType 'done' if you wish to exit")  
-    while True:
+        
         for function in list_of_functions:
             include = input(f"Would you like to include {function}?\n\n")
 
@@ -84,11 +86,24 @@ def multi_function_chooser():
                 else:
                     include = input("You must type 'yes', 'no', or 'done'.\n")
         if chosen_functions != []:
-            break
+            return chosen_functions
         else:
             print("You must choose at least one function.\n\n")
 
-    return chosen_functions
+    
+def fraction_function_chooser():
+    good_fraction_choice = False
+    good_denominator_choice = False
+    while good_fraction_choice == False:
+        fraction_choice = input("Please choose if you'd like to do fraction 'addition',\
+                                \n'subtraction', multipication', 'divison', or type 'done' to exit.\n\n")
+        if fraction_choice.lower() == "addition":
+            while good_denominator_choice == False:
+                denominator_choice = input("Please type 'same' for same denominators, 'different' for different denominators, or 'done' to exit")
+                if denominator_choice.lower() == "same":
+                    return fraction_add_same
+                elif denominator_choice.lower() == "different":
+                    return fraction_add_same
 
 # allows user to request digits
 def digit_requester():
@@ -331,47 +346,56 @@ def squares():
         
     score += answer_checking(user_answer, real_answer)
     return score
+def fraction_add_same():
+    score = 0
+
+    # generating numbers, setting answer, and requesting input
+    denominator = randint(2,12)
+    first_numerator = randint(1,3*denominator)
+    second_numerator = randint(1,3*denominator)
+    real_answer = (Fraction(first_numerator, denominator) + Fraction(second_numerator, denominator))
+    user_answer = input(f"What is {first_numerator}/{denominator} + {second_numerator}/{denominator}?\n")
+        
+    if user_answer.lower() == "done":
+        is_done = True
+        return None
+    
+    score += answer_checking(user_answer, real_answer)
+    return score 
+# chooses random function to call from list of chosen functions
 def multi(number_of_functions, new_list_of_functions):
     score = 0  
 
     # creating variables that can store the functions without calling them
-    def add_two():
+    def add_2():
         score = addition("2,2")
         return score
-    add_2 = add_two
 
-    def add_three():
+    def add_3():
         score = addition("3,3")
         return score
-    add_3 = add_three
     
-    def sub_two():
+    def sub_2():
         score = subtraction("2,2")
         return score
-    sub_2 = sub_two
 
-    def sub_three():
+    def sub_3():
         score = subtraction("3,3")
         return score
-    sub_3 = sub_three
 
-    def mul_two():
+    def mul_2():
         score = multiplication("2,2")
         return score
-    mul_2 = mul_two
 
-    def mul_three():
+    def mul_3():
         score = multiplication("3,3")
         return score
-    mul_3 = mul_three
     
-    div = division
-    square = squares
 
     # establishing dictionary where each value from list will correspond to a function
     function_dictionary = {"2 by 2 Addition" : add_2, "3 by 3 Addition" : add_3, "2 by 2 Subtraction" : sub_2, 
                            "3 by 3 Subtraction" : sub_3, "2 by 2 Multiplication" : mul_2, 
-                           "3 by 3 Multiplication" : mul_3, "Division" : div, "Square" : square}
+                           "3 by 3 Multiplication" : mul_3, "Division" : division, "Square" : squares}
     
     
     # generates random number to choose a function
@@ -427,7 +451,17 @@ def main():
             score, questions_answered = question_looper(chosen_function, None, None)
             ending_sequence(score, questions_answered)
             is_done = True
-            break   
+            break
+        elif chosen_function == "fraction":
+            fraction_choice = fraction_function_chooser()
+            if done_checker(fraction_choice) == True:
+                ending_sequence(0,0)
+                is_done = True
+                break
+            score, questions_answered = question_looper(fraction_choice, chosen_digits, None)
+            ending_sequence(score, questions_answered)
+            is_done = True
+            break
         elif chosen_function == "multi":
             chosen_functions = multi_function_chooser()
             if done_checker(chosen_functions) == True:
