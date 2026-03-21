@@ -24,7 +24,7 @@ def random_number_generator(number_of_digits):
 
 # allows user to choose the function they want
 def function_chooser():
-    list_of_functions = ["+", "-", "*", "/", "square", "multi", "fraction"]
+    list_of_functions = ["+", "-", "*", "/", "square", "multi", "fraction", "percent"]
     good_function_input = False
 
     # greeting
@@ -32,7 +32,7 @@ def function_chooser():
     
     # requesting function from user
     function_input = input("To start, please choose your function.\
-    \nPlease type +, -, *, /, 'square', 'fraction', or 'multi'. \nType 'done' if you wish to exit.\n\n")
+    \nPlease type +, -, *, /, 'square', 'fraction', 'percent' or 'multi'. \nType 'done' if you wish to exit.\n\n")
     
     # checking if they chose one of the functions
     while good_function_input == False:
@@ -56,6 +56,9 @@ def function_chooser():
             elif function_input.lower()== "fraction":
                 print("You have chosen a fraction function!\
                       \n*Note: You must simplify your answers and write them as improper fractions!*\n")
+                return function_input.lower()
+            elif function_input.lower()== "percent":
+                print("You have chosen percentages!\n\n")
                 return function_input.lower()      
             elif function_input.lower()== "multi":
                 print("You have chosen multiple functions!\n\n")
@@ -223,7 +226,7 @@ def answer_checking(answer, actual_answer):
                 return 0
         else:
             break
-def answer_checking_fraction(answer, actual_answer):
+def answer_checking_other(answer, actual_answer):
     is_done = False
     answering_questions = True
     
@@ -323,7 +326,15 @@ def question_looper(function, digits, function_list):
                     questions_answered += 1
                 elif counter == None:
                    return score, questions_answered
-                
+
+            elif function == "percent":
+                counter = percents()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+
             elif function == "fraction_add_same":
                 counter = fraction_add_same()
                 if counter != None:
@@ -489,7 +500,7 @@ def fraction_add_same():
     if user_answer.lower() == "done":
         return None
     
-    score += answer_checking_fraction(user_answer, real_answer)
+    score += answer_checking_other(user_answer, real_answer)
     return score 
 def fraction_add_diff():
     score = 0
@@ -505,7 +516,7 @@ def fraction_add_diff():
     if user_answer.lower() == "done":
         return None
     
-    score += answer_checking_fraction(user_answer, real_answer)
+    score += answer_checking_other(user_answer, real_answer)
     return score 
 def fraction_sub_same():
     score = 0
@@ -520,7 +531,7 @@ def fraction_sub_same():
     if user_answer.lower() == "done":
         return None
     
-    score += answer_checking_fraction(user_answer, real_answer)
+    score += answer_checking_other(user_answer, real_answer)
     return score 
 def fraction_sub_diff():
     score = 0
@@ -536,7 +547,7 @@ def fraction_sub_diff():
     if user_answer.lower() == "done":
         return None
     
-    score += answer_checking_fraction(user_answer, real_answer)
+    score += answer_checking_other(user_answer, real_answer)
     return score 
 def fraction_mul_same():
     score = 0
@@ -551,7 +562,7 @@ def fraction_mul_same():
     if user_answer.lower() == "done":
         return None
     
-    score += answer_checking_fraction(user_answer, real_answer)
+    score += answer_checking_other(user_answer, real_answer)
     return score 
 def fraction_mul_diff():
     score = 0
@@ -567,7 +578,7 @@ def fraction_mul_diff():
     if user_answer.lower() == "done":
         return None
     
-    score += answer_checking_fraction(user_answer, real_answer)
+    score += answer_checking_other(user_answer, real_answer)
     return score 
 def fraction_div_same():
     score = 0
@@ -582,7 +593,7 @@ def fraction_div_same():
     if user_answer.lower() == "done":
         return None
     
-    score += answer_checking_fraction(user_answer, real_answer)
+    score += answer_checking_other(user_answer, real_answer)
     return score 
 def fraction_div_diff():
     score = 0
@@ -598,8 +609,35 @@ def fraction_div_diff():
     if user_answer.lower() == "done":
         return None
     
-    score += answer_checking_fraction(user_answer, real_answer)
+    score += answer_checking_other(user_answer, real_answer)
     return score 
+def percents():
+    score = 0  
+
+    question_type = randint (0, 1) 
+    
+    if question_type == 0:
+        first_number = randint(20,150)*2
+        second_number = randint(1,30)*2
+        real_answer = (second_number / first_number) * 100
+        user_answer = input(f"What is percentage of {first_number} is {second_number}?\n")
+            
+        if user_answer.lower() == "done":
+            return None
+            
+        score += answer_checking_other(user_answer, real_answer)
+        return score
+    else:
+        real_answer = randint(1,30)*2
+        number = randint(20,150)*2
+        percentage = (real_answer / number) * 100
+        user_answer = input(f"What is number is {percentage}% of {number}?\n")
+            
+        if user_answer.lower() == "done":
+            return None
+            
+        score += answer_checking_other(user_answer, real_answer)
+        return score
 # chooses random function to call from list of chosen functions
 def multi(number_of_functions, new_list_of_functions):
     score = 0  
@@ -687,7 +725,7 @@ def main():
             ending_sequence(score, questions_answered)
             is_done = True
             break   
-        elif chosen_function == "/" or chosen_function == "square":
+        elif chosen_function == "/" or chosen_function == "square" or chosen_function == "percent":
             score, questions_answered = question_looper(chosen_function, None, None)
             ending_sequence(score, questions_answered)
             is_done = True
