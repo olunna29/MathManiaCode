@@ -1,0 +1,49 @@
+# the first function is not my code
+# from: https://www.daniweb.com/programming/software-development/threads/159163/base-conversion-module
+# Matt Laporte <lapo3399@gmail.com> 2008
+
+def toBase10(num, base):
+	sum = 0
+	parseNum = str(num)
+	indices = range(len(parseNum)) #Exponents depend on digit place, indices necessary.
+	for i in indices:
+		#Add the decimal representations of the digits.
+		sum += int(parseNum[i])*base**int(indices[::-1][i])
+	return sum
+
+
+# this is my code
+def changeBase(num, base, fromBase):
+	result = ''
+	
+	if num == 0: 
+		return '0' 
+			
+	if fromBase != 10: 
+		num = toBase10(num, fromBase)
+		fromBase = 10
+
+	if num > base**4:
+		thisDigit = num // base	
+		result += str(thisDigit)
+		num %= (base**4)
+
+	if num > base**3:
+		thisDigit = num // base	
+		result += str(thisDigit)
+		num %= (base**3)
+
+	if num > base**2:
+		thisDigit = num // base
+		result += str(thisDigit)
+		num %= (base**2)
+
+	if num > base:
+		thisDigit = num // base
+		result += str(thisDigit)
+		num %= base
+	
+	if num != 0:
+		result += str(num)
+	
+	return result
