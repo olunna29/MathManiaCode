@@ -7,7 +7,16 @@ square_dictionary = {}
 square_root_dictionary = {}
 square_root_list = [2, 3, 5, 6, 7, 8]
 roman_numeral_dictionary = {}
+roman_numeral_list_print = [1,4,5,6,10,15,20,50,60,90,100,150,490,500,600,1000,2456]
+roman_numeral_dictionary_print = {}
 decimal_dictionary = {}
+triangle_list = [1,3,6,10,15,21,28,36,45,55,66,78,91,105]
+triangle_dictionary = {}
+prime_list = [1,2,3,5,7,11,13,17,19,23,29,31,37,41,47,53,59,61,67,71,73,79,83,97,101]
+prime_dictionary = {}
+happy_list = [1,7,10,13,19,23,28,31,32,44,49,68,70,79,82,86,91,94,97,100]
+happy_dictionary = {}
+
 
 # making perfect square dictionary
 for number in range (1,30):
@@ -22,10 +31,35 @@ for number in range (1, 1000, 7):
     numeral = Romanize(number)
     roman_numeral_dictionary[number] = numeral
     roman_numeral_dictionary[numeral] = number
+# making roman numeral print dictionary
+for number in roman_numeral_list_print:
+    roman_numeral_dictionary_print[number] = Romanize(number)
 
 # making decimal dictionary
 for number in range (2, 17):
     decimal_dictionary[f"1/{number}"] = round(1/number, 4)
+
+# making triangle dictionary
+for number in range (3, 110):
+    if number in triangle_list:
+        triangle_dictionary[number] = "yes"
+    else:
+        triangle_dictionary[number] = "no"
+
+# making prime dictionary
+for number in range (1, 51):
+    num = ((number*2)+1)
+    if num in prime_list:
+        prime_dictionary[num] = "yes"
+    else:
+        prime_dictionary[num] = "no"
+
+# making happy dictionary
+for number in range (1,102):
+    if number in happy_list:
+        happy_dictionary[number] = "yes"
+    else:
+        happy_dictionary[number] = "no"
 
 # this asks the questions and collects the score
 def quizzer(dictionary, function, message):
@@ -56,6 +90,44 @@ def quizzer(dictionary, function, message):
             user_answer = input(f"What is {list(dictionary)[index]} {function}? \n")
 
             if user_answer == str(dictionary[list(dictionary)[index]]) or user_answer == str(dictionary[list(dictionary)[index]]).strip("0"):
+                print("Correct :)\n")
+                score += 1
+            elif user_answer.lower() == "done":
+                is_done = True
+                ending_sequence(score, questions)
+                return None
+            else:
+                print(f"The answer was {dictionary[list(dictionary)[index]]}\n")
+        ending_sequence(score, quiz_length)
+        return None
+def other_quizzer(dictionary, function, message):
+    is_done = False
+    length_usable = False
+    score = 0
+    
+
+    while is_done == False:
+        # asks them how many questions they want in their quiz
+        quiz_length = input("Welcome to randomized quiz review!\
+                            \nTo better help you with memorization, if you get a question wrong it will tell you what the answer was supposed to be.\
+                            \nPlease type the number of questions you'd like in your quiz (1 to 100).\n\n")
+        while length_usable == False:
+            if (quiz_length == "" or quiz_length.isnumeric() == False) and (0 < int(quiz_length) < 100 == False):
+                print("You must type a number between 1 and 100")
+            else:
+                quiz_length = int(quiz_length)
+                length_usable = True
+                break
+        
+        print(message) # additional instructions based on quiz
+        print("The quiz will now begin! If you'd like to end early type 'done'.\n")
+        
+        # loop that generates the question (from dictionary values) and checks the answer
+        for questions in range (0, quiz_length):
+            index = randint(1,len(list(dictionary))-1)
+            user_answer = input(f"Is {list(dictionary)[index]} {function}? \n")
+
+            if user_answer.lower() == str(dictionary[list(dictionary)[index]]):
                 print("Correct :)\n")
                 score += 1
             elif user_answer.lower() == "done":
@@ -100,7 +172,8 @@ def ending_sequence(score, questions):
 # allows them to choose a topic, then review method
 def main():
     print("Welcome to the Memorization Station of Math Mania!")
-    choice = input("Please select whether you'd like to review 'squares', 'square roots', 'roman numerals', 'decimals' or type 'done' to exit. \n\n")
+    choice = input("Please select whether you'd like to review 'squares', 'square roots', 'roman numerals',\
+                   \n'primes', 'happy numbers', 'triangle numbers', 'decimals' or type 'done' to exit. \n\n")
     while True:
         if choice.lower() == "squares":
             method = review_method("perfect squares")
@@ -122,7 +195,7 @@ def main():
         elif choice.lower() == "square roots":
             method = review_method("common square roots")
             if method == "list":
-                print(square_dictionary)
+                print(square_root_dictionary)
                 ending_sequence(0,0)
                 return None
             elif method == "flashcards":
@@ -135,10 +208,11 @@ def main():
             else:
                 print("Have a nice day!")
                 return None
+        
         elif choice.lower() == "roman numerals":
-            method = review_method("a lot of roman numerals")
+            method = review_method("of some roman numerals")
             if method == "list":
-                print(square_dictionary)
+                print(roman_numeral_dictionary_print)
                 ending_sequence(0,0)
                 return None
             elif method == "flashcards":
@@ -152,6 +226,58 @@ def main():
             else:
                 ending_sequence(0,0)
                 return None
+        
+        elif choice.lower() == "primes":
+            method = review_method("prime numbers")
+            if method == "list":
+                print(prime_list)
+                ending_sequence(0,0)
+                return None
+            elif method == "flashcards":
+                print("Sorry, this is a UI only feature.")
+                ending_sequence(0,0)
+                return None
+            elif method == "quiz":
+                other_quizzer (prime_dictionary, "a prime number", "Type 'yes' if it is and 'no' if it's not.")
+                return None
+            else:
+                ending_sequence(0,0)
+                return None
+
+        elif choice.lower() == "happy numbers" or choice.lower() == "happy":
+            method = review_method("happy numbers")
+            if method == "list":
+                print(happy_list)
+                ending_sequence(0,0)
+                return None
+            elif method == "flashcards":
+                print("Sorry, this is a UI only feature.")
+                ending_sequence(0,0)
+                return None
+            elif method == "quiz":
+                other_quizzer (happy_dictionary, "a happy number", "Type 'yes' if it is and 'no' if it's not.")
+                return None
+            else:
+                ending_sequence(0,0)
+                return None
+            
+        elif choice.lower() == "triangle numbers" or choice.lower() == "triangle":
+            method = review_method("triangle numbers")
+            if method == "list":
+                print(triangle_list)
+                ending_sequence(0,0)
+                return None
+            elif method == "flashcards":
+                print("Sorry, this is a UI only feature.")
+                ending_sequence(0,0)
+                return None
+            elif method == "quiz":
+                other_quizzer (triangle_dictionary, "a triangle number", "Type 'yes' if it is and 'no' if it's not.")
+                return None
+            else:
+                ending_sequence(0,0)
+                return None
+
         elif choice.lower() == "decimals":
             method = review_method("common fractions as decimals")
             if method == "list":
@@ -168,10 +294,12 @@ def main():
             else:
                 print("Have a nice day!")
                 return None
+        
         elif choice.lower() == "done":
             ending_sequence(0,0)
             return None
         else:
-            choice = input("You must type 'squares', 'square roots', 'roman numerals', or 'done'\n\n")
+            choice = input("You must type 'squares', 'square roots', 'roman numerals', 'primes',\
+                           \n'happy numbers', 'triangle numbers', 'decimals' or 'done'\n\n")
         
 main()
