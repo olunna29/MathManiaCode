@@ -18,7 +18,11 @@ def changeBase(num, base, fromBase):
 	
 	if num == 0: 
 		return '0' 
-			
+
+	if num < 0:
+		result += "-"
+		num = -num 
+
 	if fromBase != 10: 
 		num = toBase10(num, fromBase)
 		fromBase = 10
