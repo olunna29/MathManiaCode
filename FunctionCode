@@ -2,6 +2,8 @@
 # starting values and modules
 from random import randint
 from fractions import Fraction
+from base_change import toBase10
+from base_change import changeBase
 good_function_input = False
 good_digit_length = False
 digits_are_numbers = False
@@ -24,7 +26,7 @@ def random_number_generator(number_of_digits):
 
 # allows user to choose the function they want
 def function_chooser():
-    list_of_functions = ["+", "-", "*", "/", "square", "multi", "fraction", "percent"]
+    list_of_functions = ["+", "-", "*", "/", "square", "multi", "fraction", "percent", "base change"]
     good_function_input = False
 
     # greeting
@@ -32,7 +34,7 @@ def function_chooser():
     
     # requesting function from user
     function_input = input("To start, please choose your function.\
-    \nPlease type +, -, *, /, 'square', 'fraction', 'percent' or 'multi'. \nType 'done' if you wish to exit.\n\n")
+    \nPlease type +, -, *, /, 'square', 'fraction', 'percent', 'base change' or 'multi'. \nType 'done' if you wish to exit.\n\n")
     
     # checking if they chose one of the functions
     while good_function_input == False:
@@ -60,6 +62,9 @@ def function_chooser():
             elif function_input.lower()== "percent":
                 print("You have chosen percentages!\n\n")
                 return function_input.lower()      
+            elif function_input.lower()== "base change":
+                print("You have chosen a base change function!\n\n")
+                return function_input.lower()
             elif function_input.lower()== "multi":
                 print("You have chosen multiple functions!\n\n")
                 return function_input.lower()
@@ -72,7 +77,10 @@ def multi_function_chooser():
                          "3 by 3 Subtraction", "2 by 2 Multiplication", 
                          "3 by 3 Multiplication", "Division", "Square",
                          "Fraction Addition", "Fraction Subtraction", 
-                         "Fraction Multiplication", "Fraction Division"]
+                         "Fraction Multiplication", "Fraction Division",
+                         "To Base 10", "From Base 10", "Other Base Addition",
+                         "Other Base Subtraction", "Other Base Multiplication",
+                         "Other Base Division"]
     chosen_functions = []
     is_done = False
     include_usuable = False
@@ -143,6 +151,25 @@ def fraction_function_chooser():
                 elif denominator_choice.lower() == "done":
                     return None
         elif fraction_choice.lower() == "done":
+            return None
+def base_function_chooser():
+    good_choice = False
+    while good_choice == False:
+        choice = input("Please choose if you'd like to do convert 'to base ten','from base ten', do\
+                       \n'addition','subtraction', multipication',division', or type 'done' to exit.\n\n")
+        if choice.lower() == "to base ten":
+            return "to_ten"
+        elif choice.lower() == "from base ten":
+            return "from_ten"
+        elif choice.lower() == "addition":
+            return "base_add"
+        elif choice.lower() == "subtraction":
+            return "base_sub"
+        elif choice.lower() == "mutiplication":
+            return "base_mult"
+        elif choice.lower() == "division":
+            return "base_div"
+        elif choice.lower() == "done":
             return None
 
 # allows user to request digits
@@ -398,6 +425,54 @@ def question_looper(function, digits, function_list):
                     questions_answered += 1
                 elif counter == None:
                    return score, questions_answered
+                
+            elif function == "to_ten":
+                counter = to_ten()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+                
+            elif function == "from_ten":
+                counter = from_ten()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+                
+            elif function == "base_add":
+                counter = base_add()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+                
+            elif function == "base_sub":
+                counter = base_sub()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+            
+            elif function == "base_mul":
+                counter = base_mul()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
+                
+            elif function == "base_div":
+                counter = base_div()
+                if counter != None:
+                    score += counter
+                    questions_answered += 1
+                elif counter == None:
+                   return score, questions_answered
 
     elif function_list != None:
         if is_done == False:
@@ -638,6 +713,105 @@ def percents():
             
         score += answer_checking_other(user_answer, real_answer)
         return score
+#need to fix
+def to_ten():
+    score = 0  
+
+    base = randint(4,8)
+    real_answer = randint(4,60*base)
+    number = changeBase(number,base,10)
+    user_answer = input(f"What is {number} base {base} in base 10?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+        
+    score += answer_checking(user_answer, real_answer)
+    return score
+def from_ten():
+    score = 0  
+
+    base = randint(4,8)
+    number = randint(4,400)
+    real_answer = changeBase(number,base,10)
+    user_answer = input(f"What is {number} in base {base}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+        
+    score += answer_checking(user_answer, real_answer)
+    return score
+def base_add():   
+    score = 0
+
+    # generating numbers, setting answer, and requesting input for +
+    base = randint(4,8)
+    first_number = randint(4,base*30)
+    first_number = int(changeBase(first_number,base,10))
+    second_number = randint(4,base*30)
+    second_number = int(changeBase(second_number,base,10))
+    real_answer = first_number + second_number
+    real_answer = changeBase(real_answer,base,10)
+    user_answer = input(f"What is {first_number} base-{base} + {second_number} base-{base} in base-{base}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking(user_answer, real_answer)
+    return score
+def base_sub():   
+    score = 0
+
+    # generating numbers, setting answer, and requesting input for +
+    base = randint(4,8)
+    first_number = randint(4,base*50)
+    first_number = int(changeBase(first_number,base,10))
+    second_number = randint(4,base*50)
+    second_number = int(changeBase(second_number,base,10))
+    real_answer = first_number - second_number
+    real_answer = changeBase(real_answer,base,10)
+    user_answer = input(f"What is {first_number} base {base} - {second_number} base {base} in base {base}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking(user_answer, real_answer)
+    return score
+def base_mul():   
+    score = 0
+
+    # generating numbers, setting answer, and requesting input for +
+    base = randint(4,8)
+    first_number = randint(4,base*40)
+    first_number = int(changeBase(first_number,base,10))
+    second_number = randint(4,base*40)
+    second_number = int(changeBase(second_number,base,10))
+    real_answer = first_number * second_number
+    real_answer = changeBase(real_answer,base,10)
+    user_answer = input(f"What is {first_number} base {base} * {second_number} base {base} in base {base}?\n")
+        
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking(user_answer, real_answer)
+    return score
+def base_div():   
+    score = 0
+
+    # generating numbers, setting answer, and requesting input for +
+    base = randint(4,8)
+    real_answer = randint(4,base*40)
+    real_answer = int(changeBase(real_answer,base,10))
+    second_number = randint(1,18)
+    second_number = int(changeBase(second_number,base,10))
+    first_number = real_answer / second_number
+    first_number = changeBase(first_number,base,10)
+    user_answer = input(f"What is {first_number} base {base} / {second_number} base {base} in base {base}?\n")
+
+    if user_answer.lower() == "done":
+        return None
+    
+    score += answer_checking(user_answer, real_answer)
+    return score
 # chooses random function to call from list of chosen functions
 def multi(number_of_functions, new_list_of_functions):
     score = 0  
@@ -673,7 +847,10 @@ def multi(number_of_functions, new_list_of_functions):
                            "3 by 3 Subtraction" : sub_3, "2 by 2 Multiplication" : mul_2, 
                            "3 by 3 Multiplication" : mul_3, "Division" : division, "Square" : squares,
                            "Fraction Addition" : fraction_add_diff, "Fraction Subtraction": fraction_sub_diff, 
-                           "Fraction Multiplication": fraction_mul_diff, "Fraction Division": fraction_div_diff}
+                           "Fraction Multiplication": fraction_mul_diff, "Fraction Division": fraction_div_diff, 
+                           "To Base 10" : to_ten, "From Base 10" : from_ten, "Other Base Addition" : base_add,
+                            "Other Base Subtraction" : base_sub, "Other Base Multiplication" : base_mul,
+                            "Other Base Division" : base_div}
     
     
     # generates random number to choose a function
@@ -737,6 +914,16 @@ def main():
                 is_done = True
                 break
             score, questions_answered = question_looper(fraction_choice, None, None)
+            ending_sequence(score, questions_answered)
+            is_done = True
+            break
+        elif chosen_function == "base change":
+            base_choice = base_function_chooser()
+            if done_checker(base_choice) == True:
+                ending_sequence(0,0)
+                is_done = True
+                break
+            score, questions_answered = question_looper(base_choice, None, None)
             ending_sequence(score, questions_answered)
             is_done = True
             break
