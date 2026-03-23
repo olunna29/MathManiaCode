@@ -156,7 +156,7 @@ def base_function_chooser():
     good_choice = False
     while good_choice == False:
         choice = input("Please choose if you'd like to do convert 'to base ten','from base ten', do\
-                       \n'addition','subtraction', multipication',division', or type 'done' to exit.\n\n")
+                       \n'addition','subtraction', multipication', division', or type 'done' to exit.\n\n")
         if choice.lower() == "to base ten":
             return "to_ten"
         elif choice.lower() == "from base ten":
@@ -165,7 +165,7 @@ def base_function_chooser():
             return "base_add"
         elif choice.lower() == "subtraction":
             return "base_sub"
-        elif choice.lower() == "mutiplication":
+        elif choice.lower() == "multiplication":
             return "base_mult"
         elif choice.lower() == "division":
             return "base_div"
@@ -732,7 +732,7 @@ def from_ten():
 
     base = randint(4,8)
     number = randint(4,400)
-    real_answer = changeBase(number,base,10)
+    real_answer = int(changeBase(number,base,10))
     user_answer = input(f"What is {number} in base {base}?\n")
         
     if user_answer.lower() == "done":
@@ -745,12 +745,12 @@ def base_add():
 
     # generating numbers, setting answer, and requesting input for +
     base = randint(4,8)
-    first_number = randint(4,base*30)
-    first_number = int(changeBase(first_number,base,10))
-    second_number = randint(4,base*30)
-    second_number = int(changeBase(second_number,base,10))
-    real_answer = first_number + second_number
-    real_answer = changeBase(real_answer,base,10)
+    first_number_10 = randint(4,base*40)
+    first_number = int(changeBase(first_number_10,base,10))
+    second_number_10 = randint(4,base*40)
+    second_number = int(changeBase(second_number_10,base,10))
+    real_answer_10 = first_number_10 + second_number_10
+    real_answer = int(changeBase(real_answer_10,base,10))
     user_answer = input(f"What is {first_number} base-{base} + {second_number} base-{base} in base-{base}?\n")
         
     if user_answer.lower() == "done":
@@ -763,13 +763,13 @@ def base_sub():
 
     # generating numbers, setting answer, and requesting input for +
     base = randint(4,8)
-    first_number = randint(4,base*50)
-    first_number = int(changeBase(first_number,base,10))
-    second_number = randint(4,base*50)
-    second_number = int(changeBase(second_number,base,10))
-    real_answer = first_number - second_number
-    real_answer = changeBase(real_answer,base,10)
-    user_answer = input(f"What is {first_number} base {base} - {second_number} base {base} in base {base}?\n")
+    first_number_10 = randint(4,base*40)
+    first_number = int(changeBase(first_number_10,base,10))
+    second_number_10 = randint(4,base*40)
+    second_number = int(changeBase(second_number_10,base,10))
+    real_answer_10 = first_number_10 - second_number_10
+    real_answer = int(changeBase(real_answer_10,base,10))
+    user_answer = input(f"What is {first_number} base-{base} - {second_number} base-{base} in base-{base}?\n")
         
     if user_answer.lower() == "done":
         return None
@@ -781,13 +781,13 @@ def base_mul():
 
     # generating numbers, setting answer, and requesting input for +
     base = randint(4,8)
-    first_number = randint(4,base*40)
-    first_number = int(changeBase(first_number,base,10))
-    second_number = randint(4,base*40)
-    second_number = int(changeBase(second_number,base,10))
-    real_answer = first_number * second_number
-    real_answer = changeBase(real_answer,base,10)
-    user_answer = input(f"What is {first_number} base {base} * {second_number} base {base} in base {base}?\n")
+    first_number_10 = randint(4,base*40)
+    first_number = int(changeBase(first_number_10,base,10))
+    second_number_10 = randint(4,base*40)
+    second_number = int(changeBase(second_number_10,base,10))
+    real_answer_10 = first_number_10 * second_number_10
+    real_answer = int(changeBase(real_answer_10,base,10))
+    user_answer = input(f"What is {first_number} base-{base} * {second_number} base-{base} in base-{base}?\n")
         
     if user_answer.lower() == "done":
         return None
@@ -799,12 +799,12 @@ def base_div():
 
     # generating numbers, setting answer, and requesting input for +
     base = randint(4,8)
-    real_answer = randint(4,base*40)
-    real_answer = int(changeBase(real_answer,base,10))
-    second_number = randint(1,18)
-    second_number = int(changeBase(second_number,base,10))
-    first_number = real_answer / second_number
-    first_number = changeBase(first_number,base,10)
+    real_answer_10 = randint(4,base*40)
+    real_answer = int(changeBase(real_answer_10,base,10))
+    second_number_10 = randint(1,18)
+    second_number = int(changeBase(second_number_10,base,10))
+    first_number_10 = real_answer_10 / second_number_10
+    first_number = int(changeBase(first_number,base,10))
     user_answer = input(f"What is {first_number} base {base} / {second_number} base {base} in base {base}?\n")
 
     if user_answer.lower() == "done":
