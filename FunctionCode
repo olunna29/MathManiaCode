@@ -4,6 +4,8 @@ from random import randint
 from fractions import Fraction
 from base_change import toBase10
 from base_change import changeBase
+from MathFlashCards import Memorization
+from MathTipsTricks import Tips
 good_function_input = False
 good_digit_length = False
 digits_are_numbers = False
@@ -30,7 +32,7 @@ def function_chooser():
     good_function_input = False
 
     # greeting
-    print("Welcome to Math Mania!")
+    print("Welcome to the Mental Temple of Math Mania!")
     
     # requesting function from user
     function_input = input("To start, please choose your function.\
@@ -695,7 +697,7 @@ def percents():
         first_number = randint(20,150)*2
         second_number = randint(1,30)*2
         real_answer = (second_number / first_number) * 100
-        user_answer = input(f"What is percentage of {first_number} is {second_number}?\n")
+        user_answer = input(f"What percentage of {first_number} is {second_number}?\n")
             
         if user_answer.lower() == "done":
             return None
@@ -703,11 +705,16 @@ def percents():
         score += answer_checking_other(user_answer, real_answer)
         return score
     else:
-        real_answer = randint(1,30)*2
+        """ real_answer = randint(1,30)*2
         number = randint(20,150)*2
         percentage = (real_answer / number) * 100
+        user_answer = input(f"What is number is {percentage}% of {number}?\n") """
+
+        percentage = randint(1,100)
+        number = randint(20,100)
+        real_answer = (number*percentage)/100
         user_answer = input(f"What is number is {percentage}% of {number}?\n")
-            
+
         if user_answer.lower() == "done":
             return None
             
@@ -867,11 +874,19 @@ def multi(number_of_functions, new_list_of_functions):
 # says goodbye and prints score
 def ending_sequence(correct, total):    
     # closing statement with score
+    good_input = False
     if total > 0:
-        print(f"You got {correct} out of {total} questions correct!\
-        \nHave a nice day!")
-    else:
-        print("Have a nice day!")
+        print(f"You got {correct} out of {total} questions correct!\n")
+
+    while good_input == False:
+        final_check = input("If you are sure you want to exit type 'done',\
+                        \nif not type continue to enter a new section of Math Mania.\n\n")
+
+        if final_check.lower() == "done":
+            print("Have a nice day!")
+            return False
+        elif final_check.lower() == "continue":
+            return True
 
 # checks if user wants to say done (before they get to the question portion)
 def done_checker(value):
@@ -881,7 +896,7 @@ def done_checker(value):
         return False
 
 # runs the program
-def main():
+def MentalMath():
     questions_answered = 0
     score = 0
     is_done = False
@@ -939,4 +954,5 @@ def main():
             break   
 
 
-main()
+
+
