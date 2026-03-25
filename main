@@ -1,0 +1,67 @@
+from end import ending_sequence
+from MathAppFunctions import MentalMath
+from MathTipsTricks import Tips
+from MathFlashCards import Memorization
+is_done = False
+
+def subsection():
+    good_input = False
+    while good_input == False:
+        choice = input("Please select if you'd like to enter the 'Mental Temple', 'Memorization Station', or 'Tip Terminal'\
+                    \nYou may also type 'done' to exit.\n\n")
+        if choice.lower() == "mental temple" or choice.lower() == "memorization station" or choice.lower() == "tip terminal":
+            return choice
+        elif choice.lower() == "done":
+            return None
+
+def done_checker(value):
+    if value == None:
+        return True
+    else:
+        return False   
+
+def main():
+    is_done = False
+    while is_done == False:
+        print("Welcome to Math Mania!\n")
+        print("If asked to choose from a set of options, the options will always be in single quotes like 'this'.\
+            \nHowever, please do not include the single quotes in your reponse. They are just there for clarity.\
+            \n\nThere is also no need to worry about the case of your response.\
+            \nIf asked to type 'yes' for example, you may type yes or YES, it doesn't matter.\n\n")
+        section = subsection()
+        if done_checker(section) == True:
+            checker = ending_sequence(0,0)
+            if checker == None:
+                is_done = True
+                return None
+            else:
+                continue
+        elif section == "mental temple":
+            current_section = MentalMath()
+            if done_checker(current_section) == True:
+                checker = ending_sequence(0,0)
+                if checker == None:
+                    is_done = True
+                    return None
+                else:
+                    continue
+        elif section == "memorization station":
+            current_section = Memorization()
+            if done_checker(current_section) == True:
+                checker = ending_sequence(0,0)
+                if checker == None:
+                    is_done = True
+                    return None
+                else:
+                    continue
+        elif section == "tip terminal":
+            current_section == Tips()
+            if done_checker(current_section) == True:
+                checker = ending_sequence(0,0)
+                if checker == None:
+                    is_done = True
+                    return None
+                else:
+                    continue
+
+main()
