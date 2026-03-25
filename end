@@ -1,0 +1,15 @@
+def ending_sequence(correct, total):    
+    # closing statement with score
+    good_input = False
+    if total > 0:
+        print(f"\nYou got {correct} out of {total} questions correct!\n")
+
+    while good_input == False:
+        final_check = input("If you are sure you want to exit type 'done',\
+                        \nif not type continue to enter a new section of Math Mania.\n\n")
+
+        if final_check.lower() == "done":
+            print("Have a nice day!")
+            return None
+        elif final_check.lower() == "continue":
+            return True
