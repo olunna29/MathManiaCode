@@ -3,6 +3,7 @@ import math
 from random import randint
 from roman import Romanize 
 from fractions import Fraction
+from end import ending_sequence
 square_dictionary = {}
 square_root_dictionary = {}
 square_root_list = [2, 3, 5, 6, 7, 8]
@@ -163,14 +164,8 @@ Type 'done' to exit.\n\n")
         else:
             review_type = input("You must type 'list', 'flashcards', 'quiz', or 'done'\n\n")
 
-# Says goodbye and score (if applicable)
-def ending_sequence(score, questions):
-    if questions > 0:
-        print (f"You got {score} out of {questions} questions correct!")
-    print("Have a nice day!")
-
 # allows them to choose a topic, then review method
-def main():
+def Memorization():
     print("Welcome to the Memorization Station of Math Mania!")
     choice = input("Please select whether you'd like to review 'squares', 'square roots', 'roman numerals',\
                    \n'primes', 'happy numbers', 'triangle numbers', 'decimals' or type 'done' to exit. \n\n")
@@ -302,4 +297,3 @@ def main():
             choice = input("You must type 'squares', 'square roots', 'roman numerals', 'primes',\
                            \n'happy numbers', 'triangle numbers', 'decimals' or 'done'\n\n")
         
-main()
