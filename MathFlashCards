@@ -3,7 +3,6 @@ import math
 from random import randint
 from roman import Romanize 
 from fractions import Fraction
-from end import ending_sequence
 square_dictionary = {}
 square_root_dictionary = {}
 square_root_list = [2, 3, 5, 6, 7, 8]
@@ -163,6 +162,11 @@ Type 'done' to exit.\n\n")
             return None
         else:
             review_type = input("You must type 'list', 'flashcards', 'quiz', or 'done'\n\n")
+
+def ending_sequence(correct, total):    
+    if total > 0:
+        print(f"You got {correct} out of {total} questions correct!\n")
+
 
 # allows them to choose a topic, then review method
 def Memorization():
