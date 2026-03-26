@@ -1,0 +1,82 @@
+divisability_dictionary = {
+    3:"",
+    4:"",
+    6:"",
+    7:"",
+    8:"",
+    9:""
+}
+
+def selection():
+    good_choice = False
+    while good_choice == False:
+        choice = input("Would you like to review '0' divisability rules or type 'done' to exit.\n\n")
+        if choice == "0":
+            return choice
+        elif choice == "done":
+            return None
+
+def done_checker(value):
+    if value == None:
+        return True
+    else:
+        return False
+
+def reviewer (questions):
+    print("hi")
+
+def divisability(dictionary):
+    divisability_3 = {}
+    divisability_4 = {}
+    divisability_6 = {}
+    divisability_7 = {}
+    divisability_8 = {}
+    divisability_9 = {}
+    good_choice = False
+    is_done = False
+
+    while is_done == False:
+        while good_choice == False:
+            choice = input("Please select if you'd like to review divisiablity rules for\
+                        \n'3', '4', '6', '7', '8', '9' or type 'done' to exit.\n\n")
+            if choice == "done":
+                return None
+            elif choice == ("3" or "4" or "6" or "7" or "8" or "9"):
+                chosen = choice
+                good_choice = True
+                break
+
+        if chosen == "3":
+            good_questions = False
+            print(dictionary[3])
+            while good_questions == False:
+                questions = input("\nIf you'd also like to review some questions type 'yes'.\
+                  \nTo review a different divisability tip 'return' or type 'done' to exit.\n\n")
+                if questions == "done":
+                    return None
+                elif questions == "yes":
+                    reviewer(divisability_3)
+                elif questions == "return":
+                    good_questions = True
+                    break
+
+            
+
+
+
+def Tips():
+    is_done = False
+    print("Welcome to the Tip Terminal of Math Mania!\n\n")
+    
+    while is_done == False:
+        topic = selection()
+        if done_checker(topic) == True:
+            return None
+        elif topic == "0":
+            checker = divisability(divisability_dictionary)
+            if done_checker(checker) == True:
+                return None
+            if checker == "return":
+                continue
+    
+    return None
