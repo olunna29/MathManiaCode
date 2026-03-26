@@ -30,9 +30,6 @@ def random_number_generator(number_of_digits):
 def function_chooser():
     list_of_functions = ["+", "-", "*", "/", "square", "multi", "fraction", "percent", "base change"]
     good_function_input = False
-
-    # greeting
-    print("Welcome to the Mental Temple of Math Mania!")
     
     # requesting function from user
     function_input = input("To start, please choose your function.\
@@ -302,8 +299,8 @@ def question_looper(function, digits, function_list):
             # must be true to loop questions
             answering_questions = True
             
-            print("\nNow it's time to start answering questions!\
-            \nType 'done' when you want to finish and get your score\n\n")
+            print("Now it's time to start answering questions!\
+            \nType 'done' when you want to finish and get your score\n")
 
         while is_done == False and answering_questions == True:
             if function == "+":
@@ -695,8 +692,8 @@ def percents():
     
     if question_type == 0:
         first_number = randint(20,150)*2
-        second_number = randint(1,30)*2
-        real_answer = (second_number / first_number) * 100
+        real_answer = randint(1,20)*5
+        second_number = (first_number*real_answer)/100
         user_answer = input(f"What percentage of {first_number} is {second_number}?\n")
             
         if user_answer.lower() == "done":
@@ -705,13 +702,9 @@ def percents():
         score += answer_checking_other(user_answer, real_answer)
         return score
     else:
-        """ real_answer = randint(1,30)*2
-        number = randint(20,150)*2
-        percentage = (real_answer / number) * 100
-        user_answer = input(f"What is number is {percentage}% of {number}?\n") """
 
-        percentage = randint(1,100)
-        number = randint(20,100)
+        percentage = randint(1,20)*5
+        number = randint(10,100)*2
         real_answer = (number*percentage)/100
         user_answer = input(f"What is number is {percentage}% of {number}?\n")
 
@@ -720,7 +713,6 @@ def percents():
             
         score += answer_checking_other(user_answer, real_answer)
         return score
-#need to fix
 def to_ten():
     score = 0  
 
@@ -871,22 +863,10 @@ def multi(number_of_functions, new_list_of_functions):
     score += counter
     return score
 
-# says goodbye and prints score
+# prints score
 def ending_sequence(correct, total):    
-    # closing statement with score
-    good_input = False
     if total > 0:
         print(f"You got {correct} out of {total} questions correct!\n")
-
-    while good_input == False:
-        final_check = input("If you are sure you want to exit type 'done',\
-                        \nif not type continue to enter a new section of Math Mania.\n\n")
-
-        if final_check.lower() == "done":
-            print("Have a nice day!")
-            return False
-        elif final_check.lower() == "continue":
-            return True
 
 # checks if user wants to say done (before they get to the question portion)
 def done_checker(value):
@@ -901,58 +881,60 @@ def MentalMath():
     score = 0
     is_done = False
     
+    # greeting
+    print("Welcome to the Mental Temple of Math Mania!")
+
     while is_done == False:
         chosen_function = function_chooser()
         if done_checker(chosen_function) == True:
             ending_sequence(0,0)
             is_done = True
-            break
+            return None
         elif chosen_function == "+" or chosen_function == "-" or chosen_function == "*":
             chosen_digits = digit_requester()
             if done_checker(chosen_digits) == True:
                 ending_sequence(0,0)
                 is_done = True
-                break
+                return None
             score, questions_answered = question_looper(chosen_function, chosen_digits, None)
             ending_sequence(score, questions_answered)
             is_done = True
-            break   
+            return None   
         elif chosen_function == "/" or chosen_function == "square" or chosen_function == "percent":
             score, questions_answered = question_looper(chosen_function, None, None)
             ending_sequence(score, questions_answered)
             is_done = True
-            break
+            return None
         elif chosen_function == "fraction":
             fraction_choice = fraction_function_chooser()
             if done_checker(fraction_choice) == True:
                 ending_sequence(0,0)
                 is_done = True
-                break
+                return None
             score, questions_answered = question_looper(fraction_choice, None, None)
             ending_sequence(score, questions_answered)
             is_done = True
-            break
+            return None
         elif chosen_function == "base change":
             base_choice = base_function_chooser()
             if done_checker(base_choice) == True:
                 ending_sequence(0,0)
                 is_done = True
-                break
+                return None
             score, questions_answered = question_looper(base_choice, None, None)
             ending_sequence(score, questions_answered)
             is_done = True
-            break
+            return None
         elif chosen_function == "multi":
             chosen_functions = multi_function_chooser()
             if done_checker(chosen_functions) == True:
                 ending_sequence(0,0)
                 is_done = True
-                break
+                return None
             score, questions_answered = question_looper(chosen_function, None, chosen_functions)
             ending_sequence(score, questions_answered)
             is_done = True
-            break   
-
+            return None   
 
 
 
