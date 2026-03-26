@@ -1,4 +1,3 @@
-from end import ending_sequence
 from MathAppFunctions import MentalMath
 from MathTipsTricks import Tips
 from MathFlashCards import Memorization
