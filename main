@@ -7,9 +7,9 @@ is_done = False
 def subsection():
     good_input = False
     while good_input == False:
-        choice = input("Please select if you'd like to enter the 'Mental Temple', 'Memorization Station', or 'Tip Terminal'\
+        choice = input("Please select if you'd like to enter the Mental Temple '1', Memorization Station '2', or Tip Terminal '3'\
                     \nYou may also type 'done' to exit.\n\n")
-        if choice.lower() == "mental temple" or choice.lower() == "memorization station" or choice.lower() == "tip terminal":
+        if choice == "1" or choice == "2" or choice == "3":
             return choice
         elif choice.lower() == "done":
             return None
@@ -20,15 +20,44 @@ def done_checker(value):
     else:
         return False   
 
+def ending_sequence(correct, total):    
+    # closing statement with score
+    good_input = False
+    if total > 0:
+        print(f"\nYou got {correct} out of {total} questions correct!\n")
+
+    while good_input == False:
+        final_check = input("If you are sure you want to exit type 'done',\
+                        \nif not type 'continue' to enter a new section of Math Mania.\n\n")
+
+        if final_check.lower() == "done":
+            print("Have a nice day!")
+            return None
+        elif final_check.lower() == "continue":
+            return True
+
 def main():
     is_done = False
-    while is_done == False:
-        print("Welcome to Math Mania!\n")
-        print("If asked to choose from a set of options, the options will always be in single quotes like 'this'.\
+    
+    print("Welcome to Math Mania!\n")
+    print("*Important Info*\n")
+    print("1.If asked to choose from a set of options, the options will always be in single quotes like 'this'.\
             \nHowever, please do not include the single quotes in your reponse. They are just there for clarity.\
-            \n\nThere is also no need to worry about the case of your response.\
+            \n\n2.There is no need to worry about the case of your response.\
             \nIf asked to type 'yes' for example, you may type yes or YES, it doesn't matter.\n\n")
+        
+    understood = False
+    while understood == False:
+        understanding = input("Please type anything and press enter to continue.\n\n")
+        if understanding != "":
+            understood = True
+            break
+        else:
+            understanding = input("Please type anything and press enter to continue.\n\n")
+
+    while is_done == False:   
         section = subsection()
+        
         if done_checker(section) == True:
             checker = ending_sequence(0,0)
             if checker == None:
@@ -36,6 +65,7 @@ def main():
                 return None
             else:
                 continue
+        
         elif section == "mental temple":
             current_section = MentalMath()
             if done_checker(current_section) == True:
