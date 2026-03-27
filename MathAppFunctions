@@ -76,7 +76,7 @@ def multi_function_chooser():
                          "3 by 3 Subtraction", "2 by 2 Multiplication", 
                          "3 by 3 Multiplication", "Division", "Square",
                          "Fraction Addition", "Fraction Subtraction", 
-                         "Fraction Multiplication", "Fraction Division",
+                         "Fraction Multiplication", "Fraction Division", "Percentages"
                          "To Base 10", "From Base 10", "Other Base Addition",
                          "Other Base Subtraction", "Other Base Multiplication",
                          "Other Base Division"]
@@ -847,7 +847,7 @@ def multi(number_of_functions, new_list_of_functions):
                            "3 by 3 Multiplication" : mul_3, "Division" : division, "Square" : squares,
                            "Fraction Addition" : fraction_add_diff, "Fraction Subtraction": fraction_sub_diff, 
                            "Fraction Multiplication": fraction_mul_diff, "Fraction Division": fraction_div_diff, 
-                           "To Base 10" : to_ten, "From Base 10" : from_ten, "Other Base Addition" : base_add,
+                           "Percentages" : percents, "To Base 10" : to_ten, "From Base 10" : from_ten, "Other Base Addition" : base_add,
                             "Other Base Subtraction" : base_sub, "Other Base Multiplication" : base_mul,
                             "Other Base Division" : base_div}
     
