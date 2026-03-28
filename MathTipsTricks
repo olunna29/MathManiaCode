@@ -1,10 +1,22 @@
 divisability_dictionary = {
-    3:"",
-    4:"",
-    6:"",
-    7:"",
-    8:"",
-    9:""
+    3:"If the sum of a number's digits are divisable by 3,\
+        \nthen the number is divisable by 3.\
+        \n\nEx) 534 is divisable by 3 because 5 + 3 + 4 = 12 which is divisable by 3.",
+    4:"If the last 2 digits are divisable by 4 or are both 0s,\
+        \nthen the number is divisable by 4.\
+        \n\nEx) 69524 is divisable by 4 because 24 is divisable by 4.",
+    6:"If a number is divisable by 2 and is divisable by 3,\
+        \nthen it is divisable by 6.\
+        \n\nEx) 588 is divisable by 6 because it is divisable by both 2 and 3.",
+    7:"If the last digit multiplied by 2 and subtracted from the original number not including the last digit\
+        \nis divisible by 7, then the number is diviable by 7\
+        \n\nEx) ",
+    8:"If the last 3 digits are divisable by 8 or are all 0s,\
+        \nthen the number is divisable by 8.\
+        \n\nEx) 52748 is divisable by 8 because 48 is divisable by 8",
+    9:"If the sum of a number's digits are divisable by 9,\
+         \nthen the number is divisable by 9.\
+         \n\nEx) 6273 is divisable by 9 because 6 + 2 + 7 + 3 = 18 which is divisable by 9"
 }
 
 def selection():
@@ -23,7 +35,8 @@ def done_checker(value):
         return False
 
 def reviewer (questions):
-    print("hi")
+    print("Here are 3 example questions to help you practice.\
+          \nIf you want to exit at any time, please type 'done'.")
 
 def divisability(dictionary):
     divisability_3 = {}
