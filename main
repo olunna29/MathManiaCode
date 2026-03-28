@@ -65,7 +65,7 @@ def main():
             else:
                 continue
         
-        elif section == "mental temple":
+        elif section == "1":
             current_section = MentalMath()
             if done_checker(current_section) == True:
                 checker = ending_sequence(0,0)
@@ -74,7 +74,7 @@ def main():
                     return None
                 else:
                     continue
-        elif section == "memorization station":
+        elif section == "2":
             current_section = Memorization()
             if done_checker(current_section) == True:
                 checker = ending_sequence(0,0)
@@ -83,7 +83,7 @@ def main():
                     return None
                 else:
                     continue
-        elif section == "tip terminal":
+        elif section == "3":
             current_section == Tips()
             if done_checker(current_section) == True:
                 checker = ending_sequence(0,0)
