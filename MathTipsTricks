@@ -10,10 +10,10 @@ divisability_dictionary = {
         \n\nEx) 588 is divisable by 6 because it is divisable by both 2 and 3.",
     7:"If the last digit multiplied by 2 and subtracted from the original number not including the last digit\
         \nis divisible by 7, then the number is diviable by 7\
-        \n\nEx) ",
+        \n\nEx) 623 is divisable by 7 because 3 * 2 = 6 and 62 - 6 = 56 which is divisable by 7",
     8:"If the last 3 digits are divisable by 8 or are all 0s,\
         \nthen the number is divisable by 8.\
-        \n\nEx) 52748 is divisable by 8 because 48 is divisable by 8",
+        \n\nEx) 52848 is divisable by 8 because 848 is divisable by 8",
     9:"If the sum of a number's digits are divisable by 9,\
          \nthen the number is divisable by 9.\
          \n\nEx) 6273 is divisable by 9 because 6 + 2 + 7 + 3 = 18 which is divisable by 9"
@@ -35,8 +35,8 @@ def done_checker(value):
         return False
 
 def reviewer (questions):
-    print("Here are 3 example questions to help you practice.\
-          \nIf you want to exit at any time, please type 'done'.")
+    print("Sorry, this area is currently under development.\
+          \nCheck back soon!\n\n")
 
 def divisability(dictionary):
     divisability_3 = {}
@@ -54,7 +54,7 @@ def divisability(dictionary):
                         \n'3', '4', '6', '7', '8', '9' or type 'done' to exit.\n\n")
             if choice == "done":
                 return None
-            elif choice == ("3" or "4" or "6" or "7" or "8" or "9"):
+            elif choice == "3" or choice == "4" or choice == "6" or choice == "7" or choice == "8" or choice == "9":
                 chosen = choice
                 good_choice = True
                 break
@@ -69,12 +69,85 @@ def divisability(dictionary):
                     return None
                 elif questions == "yes":
                     reviewer(divisability_3)
+                    return None
                 elif questions == "return":
                     good_questions = True
                     break
 
-            
+        elif chosen == "4":
+            good_questions = False
+            print(dictionary[4])
+            while good_questions == False:
+                questions = input("\nIf you'd also like to review some questions type 'yes'.\
+                  \nTo review a different divisability tip 'return' or type 'done' to exit.\n\n")
+                if questions == "done":
+                    return None
+                elif questions == "yes":
+                    reviewer(divisability_4)
+                    return None
+                elif questions == "return":
+                    good_questions = True
+                    break
 
+        elif chosen == "6":
+            good_questions = False
+            print(dictionary[6])
+            while good_questions == False:
+                questions = input("\nIf you'd also like to review some questions type 'yes'.\
+                  \nTo review a different divisability tip 'return' or type 'done' to exit.\n\n")
+                if questions == "done":
+                    return None
+                elif questions == "yes":
+                    reviewer(divisability_6)
+                    return None
+                elif questions == "return":
+                    good_questions = True
+                    break
+
+        elif chosen == "7":
+            good_questions = False
+            print(dictionary[7])
+            while good_questions == False:
+                questions = input("\nIf you'd also like to review some questions type 'yes'.\
+                  \nTo review a different divisability tip 'return' or type 'done' to exit.\n\n")
+                if questions == "done":
+                    return None
+                elif questions == "yes":
+                    reviewer(divisability_7)
+                    return None
+                elif questions == "return":
+                    good_questions = True
+                    break
+
+        elif chosen == "8":
+            good_questions = False
+            print(dictionary[8])
+            while good_questions == False:
+                questions = input("\nIf you'd also like to review some questions type 'yes'.\
+                  \nTo review a different divisability tip 'return' or type 'done' to exit.\n\n")
+                if questions == "done":
+                    return None
+                elif questions == "yes":
+                    reviewer(divisability_8)
+                    return None
+                elif questions == "return":
+                    good_questions = True
+                    break
+
+        elif chosen == "9":
+            good_questions = False
+            print(dictionary[9])
+            while good_questions == False:
+                questions = input("\nIf you'd also like to review some questions type 'yes'.\
+                  \nTo review a different divisability tip 'return' or type 'done' to exit.\n\n")
+                if questions == "done":
+                    return None
+                elif questions == "yes":
+                    reviewer(divisability_9)
+                    return None
+                elif questions == "return":
+                    good_questions = True
+                    break
 
 
 def Tips():
